@@ -38,17 +38,24 @@ class database:
         try:
             op = 'INSERT INTO ' + table
             if cols != None:
-                op += '('
-                op += ','.join(cols)
-                op = op+') VALUES('
+                if type(cols) != str:
+                    op += '('
+                    op += ','.join(cols)
+                    op = op+') VALUES('
+                else:
+                    op += '(%s) VALUES(' % cols
             else:
                 op = op+' VALUES('
-            for value in values:
-                if type(value) == str and ('SELECT' not in value):
-                    op += "'"+value+"',"
-                else:
-                    op += str(value)+','
+            if type(values) != str:
+                for value in values:
+                    if type(value) == str and ('SELECT' not in value):
+                        op += "'"+value+"',"
+                    else:
+                        op += str(value)+','
+            else:
+                op += "\'%s\'\'" % values
             op = op[:-1]+');'
+            print(op)
             self.cursor.execute(op)
             return True
 
@@ -57,12 +64,12 @@ class database:
             return False
 
     # binary
-    def insert_bin(self, table, chunk_id, value: bytes):
+    def insert_bin(self, table, id, value: bytes):
         if any([x == None for x in (table, value)]):
             return False
         try:
-            op = 'INSERT INTO '+'%s(chunk_id,data)' % table + \
-                ' VALUES(\''+chunk_id+'\',%s);'
+            op = 'INSERT INTO '+'%s(id,data)' % table + \
+                ' VALUES(\''+id+'\',%s);'
             self.cursor.execute(op, (value,))
             return True
         except Exception as e:
@@ -74,6 +81,7 @@ class database:
             if any([x == None for x in [table, col, where]]):
                 return False
             op = "SELECT %s FROM %s WHERE %s" % (col, table, where)
+            print(op)
             self.cursor.execute(op)
             return self.cursor.fetchall()
         except Exception as e:
@@ -88,11 +96,22 @@ class database:
             print(e)
             return None
 
-    def update(self, table, primary_key, what):
+    def update(self, table, primary_key, value):
         try:
-            op = 'UPDATE %s SET %s WHERE id=\'%s\'' % (
-                table, what, primary_key)
+            op = 'UPDATE %s SET data=\'%s\' WHERE id=\'%s\';' % (
+                table, value, primary_key)
+            print(op)
             self.cursor.execute(op)
+            return True
+        except Exception as e:
+            print(e)
+            return None
+
+    def update_bin(self, table, primary_key, value):
+        try:
+            op = 'UPDATE ' + table+' SET data=%s '+' WHERE id=\''+primary_key+'\';'
+            print(op)
+            self.cursor.execute(op, (value,))
             return True
         except Exception as e:
             print(e)
@@ -100,3 +119,6 @@ class database:
 
     def commit(self):
         self.database.commit()
+
+
+DATABASE = database()
