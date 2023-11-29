@@ -33,11 +33,11 @@ class database:
 
     # str and int
     def insert(self, table, cols, values):
-        if values == None or table == None:
+        if values is None or table is None:
             return False
         try:
             op = 'INSERT INTO ' + table
-            if cols != None:
+            if cols is not None:
                 if type(cols) != str:
                     op += '('
                     op += ','.join(cols)
@@ -65,7 +65,7 @@ class database:
 
     # binary
     def insert_bin(self, table, id, value: bytes):
-        if any([x == None for x in (table, value)]):
+        if any([x is None for x in (table, value)]):
             return False
         try:
             op = 'INSERT INTO '+'%s(id,data)' % table + \
@@ -78,7 +78,7 @@ class database:
 
     def select(self, table, col, where):
         try:
-            if any([x == None for x in [table, col, where]]):
+            if any([x is None for x in [table, col, where]]):
                 return False
             op = "SELECT %s FROM %s WHERE %s" % (col, table, where)
             print(op)
