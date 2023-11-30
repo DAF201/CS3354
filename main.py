@@ -19,5 +19,5 @@ if __name__ == '__main__':
     # print(fetch_account('daf201'))
     app = Application(ROUTE_PATH)
     http_server = HTTPServer(app)
-    http_server.listen(80)
+    http_server.listen(80,'0.0.0.0')
     IOLoop.instance().start()
