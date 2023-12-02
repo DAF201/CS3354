@@ -12,27 +12,27 @@ def account_info_init():
 
 
 def new_account(user_name, password, real_name):
-    try:
-        DATABASE.insert('account', None, (user_name, password))
-        DATABASE.insert('name', None, (user_name, real_name))
-        DATABASE.insert_bin('BMI',  user_name,
-                            b64encode(dumps([]).encode()))
-        DATABASE.insert_bin('calorie',  user_name,
-                            b64encode(dumps([]).encode()))
-        DATABASE.insert_bin('height',  user_name,
-                            b64encode(dumps([]).encode()))
-        DATABASE.insert_bin('name',  user_name,
-                            b64encode(dumps([]).encode()))
-        DATABASE.insert_bin('weight',  user_name,
-                            b64encode(dumps([]).encode()))
-        DATABASE.insert_bin('workout',  user_name,
-                            b64encode(dumps(['start']).encode()))
-        DATABASE.insert_bin('duration',  user_name,
-                            b64encode(dumps([0.0]).encode()))
-        DATABASE.commit()
-        return {'statu': 201, 'msg': 'success'}
-    except Exception as e:
-        return {'statu': 403, 'msg': e.__str__()}
+    # try:
+    DATABASE.insert('account', None, (user_name, password))
+    DATABASE.insert('name', None, (user_name, real_name))
+    DATABASE.insert_bin('BMI',  user_name,
+                        b64encode(dumps([]).encode()))
+    DATABASE.insert_bin('calorie',  user_name,
+                        b64encode(dumps([]).encode()))
+    DATABASE.insert_bin('height',  user_name,
+                        b64encode(dumps([]).encode()))
+    DATABASE.insert_bin('name',  user_name,
+                        b64encode(dumps([]).encode()))
+    DATABASE.insert_bin('weight',  user_name,
+                        b64encode(dumps([]).encode()))
+    DATABASE.insert_bin('workout',  user_name,
+                        b64encode(dumps(['start']).encode()))
+    DATABASE.insert_bin('duration',  user_name,
+                        b64encode(dumps([0.0]).encode()))
+    DATABASE.commit()
+    return {'statu': 201, 'msg': 'success'}
+    # except Exception as e:
+    #     return {'statu': 403, 'msg': e.__str__()}
 
 
 def fetch_account(user_name):
@@ -57,7 +57,7 @@ def fetch_account(user_name):
         return {'statu': 200, 'msg': ac}
 
     except Exception as e:
-        return {'statu': 403, 'msg': e.__str__()}
+        return {'statu': 403, 'msg': e}
 
 
 def update_account(user_name, table, value, bin=True):
@@ -68,4 +68,4 @@ def update_account(user_name, table, value, bin=True):
         return {'statu': 200, 'msg': 'success'}
     except Exception as e:
         print(e)
-        return {'statu': 304, 'msg': e.__str__()}
+        return {'statu': 304, 'msg': e}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body {
+        background-color: #000;
+        /* Black background color */
+        color: #fff;
+        /* White text color */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #000;
+        /* Black background color for the header */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1,
+    p {
+        margin: 0;
+        /* Remove default margin for h1 and p */
+        color: #22d48a
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        /* Add space between header and the first box */
+    }
+
+    .info-box {
+        background-color: #1b1f1d;
+        /* Transparent background */
+        border: 1px solid #22d48a;
+        /* Border instead of a solid background */
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 80%;
+        max-width: 400px;
+    }
+
+    input {
+        background-color: transparent;
+        /* Transparent background for input */
+        color: #fff;
+        /* White text color for input */
+        border: none;
+        /*border-bottom: 1px solid #22d48a; /* Border for input */
+        padding: 5px;
+        margin-top: 5px;
+        border: 0;
+    }
+
+    select {
+        background-color: transparent;
+        /* Transparent background for input */
+        color: #fff;
+        /* White text color for input */
+        border: none;
+        /*border-bottom: 1px solid #22d48a; /* Border for input */
+        padding: 5px;
+        margin-top: 5px;
+        border: 0;
+    }
+
+    .edit-button {
+        background-color: #22d48a;
+        /* Green color for buttons */
+        color: #000000;
+        padding: 10px 15px;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5px;
+        /* Adjusted margin */
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        /* Adjusted margin */
+    }
+
+    label {
+        color: #9e9e9e;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Registration</title>
+</head>
+<script>
+    function request(mathod, URL, param, callback = function () { }, callback_args = []) {
+        let http_request = new XMLHttpRequest()
+        try {
+            http_request.open(mathod, URL)
+            http_request.send(param)
+            http_request.onloadend = function () {
+                data_backup = http_request.responseText
+                callback(http_request.responseText, callback_args)
+            }
+        } catch (err) {
+            print(err)
+        }
+    }
+
+    function go_home() {
+        window.location = '/'
+    }
+
+    function save() {
+        // let name = document.getElementById('name').value
+        // let email = document.getElementById('email').value
+        let password = document.getElementById('password').value
+        let repassword = document.getElementById('re-password').value
+        if (password != repassword) {
+            window.alert("passwords does not match")
+            password = document.getElementById('password').value = ''
+            repassword = document.getElementById('re-password').value = ''
+            return
+        }
+        f = document.getElementById('register_form')
+        f.method = 'post'
+        f.submit()
+        // request('post', '/API?account_register', { 'name': name, 'email': email, 'password': password }, go_home)
+    }
+</script>
+
+<body>
+    <header>
+        <div class="header-content">
+            <button class="edit-button" id="back_button" onclick="go_home()">Back</button>
+            <h1>Account Registration</h1>
+            <button class="edit-button" onclick="save()">Save</button>
+        </div>
+    </header>
+
+    <section sty>
+        <form action="/API?account_register" id="register_form" method="post">
+            <div class="info-box" style="width: 200%;">
+                <label for="name"> Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <!-- <div class="info-box">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div> -->
+            <!-- 
+        <div class="info-box">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" required>
+        </div> -->
+
+            <div class="info-box" style="width: 200%;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="info-box" style="width: 200%;">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="info-box" style="width: 200%;">
+                <label for="password">Retype Password:</label>
+                <input type="password" id="re-password" name="re-password" required>
+            </div>
+        </form>
+    </section>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+<!-- <script>// Function to validate password requirements
+    function validatePassword(password) {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+,\-.\/:;<=>?@[\\\]^_`{|}~]).{8,}$/;
+        return passwordRegex.test(password);
+    }
+
+    // Function to save changes to local storage
+    function saveChanges() {
+        const nameInput = document.getElementById('name');
+        const genderSelect = document.getElementById('gender');
+        const birthdayInput = document.getElementById('birthday');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        // Validate password
+        if (!validatePassword(passwordInput.value)) {
+            alert('Password does not meet the requirements.');
+            return;
+        }
+
+        // Ask for confirmation
+        const isConfirmed = confirm('Are you sure you want to change your password?');
+        if (!isConfirmed) {
+            return;
+        }
+
+        // Save data to local storage
+        localStorage.setItem('name', nameInput.value);
+        localStorage.setItem('gender', genderSelect.value);
+        localStorage.setItem('birthday', birthdayInput.value);
+        localStorage.setItem('email', emailInput.value);
+        localStorage.setItem('password', passwordInput.value);
+
+        alert('Changes saved!');
+    }
+
+    // Function to discard changes and load data from local storage
+    function discardChanges() {
+        // Load data from local storage
+        document.getElementById('name').value = localStorage.getItem('name') || '';
+        document.getElementById('gender').value = localStorage.getItem('gender') || 'male';
+        document.getElementById('birthday').value = localStorage.getItem('birthday') || '';
+        document.getElementById('email').value = localStorage.getItem('email') || '';
+        document.getElementById('password').value = localStorage.getItem('password') || '';
+
+        alert('Changes discarded.');
+    }
+
+    // Load data from local storage on page load
+    window.onload = function () {
+        document.getElementById('name').value = localStorage.getItem('name') || '';
+        document.getElementById('gender').value = localStorage.getItem('gender') || 'male';
+        document.getElementById('birthday').value = localStorage.getItem('birthday') || '';
+        document.getElementById('email').value = localStorage.getItem('email') || '';
+        document.getElementById('password').value = localStorage.getItem('password') || '';
+    };
+</script> -->
+
+</html>
