@@ -75,9 +75,14 @@ class APIs(RequestHandler, DigestAuthMixin):
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_statistic(self):
+        options = ['height', 'weight', 'calorie', 'BMI', 'duration']
+        key = []
+        for x in self.request.body_arguments.keys():
+            key.append(x)
+        data = loads(key[0])
         user = search('username=\".*\", realm', self.request.headers.get('Authorization')
                       ).group(0).replace('username="', '').replace('", realm', '')
-        self.write(draw_all(user))
+        self.write(b64encode(draw(user, options[int(data) % 5])))
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_statistic_b64(self):

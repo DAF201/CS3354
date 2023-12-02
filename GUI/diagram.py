@@ -20,15 +20,18 @@ def draw(account_id, measure) -> bytes:
 
 
 def draw_all(account_id):
-    data = fetch_account(account_id)['msg']
-    print(data)
-    memory_file = BytesIO()
-    plt.title(account_id)
-    # print(data['BMI'], data['calorie'], data['height'],
-    #       data['weight'], data['duration'])
-    plt.plot(data['BMI'], data['calorie'], data['height'],
-             data['weight'], data['duration'])
-    plt.savefig(memory_file, format='png')
-    plt.clf()
-    data = memory_file.getvalue()
-    return data
+    try:
+        data = fetch_account(account_id)['msg']
+        # print(data)
+        memory_file = BytesIO()
+        plt.title(account_id)
+        # print(data['BMI'], data['calorie'], data['height'],
+        #       data['weight'], data['duration'])
+        plt.plot(data['BMI'], data['calorie'], data['height'],
+                 data['weight'], data['duration'])
+        plt.savefig(memory_file, format='png')
+        plt.clf()
+        data = memory_file.getvalue()
+        return data
+    except:
+        return b''
