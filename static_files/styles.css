@@ -1,0 +1,81 @@
+body {
+    background-color: #000; /* Black background color */
+    color: #fff; /* White text color */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #000; /* Black background color for the header */
+    padding: 20px;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1, p {
+    margin: 0; /* Remove default margin for h1 and p */
+    color: #22d48a
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Add space between header and the first box */
+}
+
+.info-box {
+    background-color: #1b1f1d; /* Transparent background */
+    border: 1px solid #22d48a; /* Border instead of a solid background */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 400px;
+}
+
+input {
+    background-color: transparent; /* Transparent background for input */
+    color: #fff; /* White text color for input */
+    border: none;
+    /*border-bottom: 1px solid #22d48a; /* Border for input */
+    padding: 5px;
+    margin-top: 5px;
+}
+
+select {
+    background-color: transparent; /* Transparent background for input */
+    color: #fff; /* White text color for input */
+    border: none;
+    /*border-bottom: 1px solid #22d48a; /* Border for input */
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.edit-button {
+    background-color: #22d48a; /* Green color for buttons */
+    color: #000000;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px; /* Adjusted margin */
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px; /* Adjusted margin */
+}
+
+label {
+    color: #9e9e9e;
+}
