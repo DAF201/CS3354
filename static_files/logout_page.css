@@ -1,0 +1,67 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #0a0f0d; /* Main background color */
+    color: #fff; /* Main text color */
+}
+
+.logout-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 2em;
+    color: #22d48a; /* Fitness Fusion theme green color */
+    margin-bottom: 1em;
+}
+
+.logout-content h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.logout-content p {
+    font-size: 1em;
+    margin-bottom: 2em;
+}
+
+.btn-primary {
+    background-color: #22d48a; /* Button background color */
+    color: #0a0f0d; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1e9d74; /* Darken the button on hover */
+}
+
+/* You may want to add media queries to optimize the layout for different screen sizes */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    .logout-content h2 {
+        font-size: 1.2em;
+    }
+    .logout-content p {
+        font-size: 0.9em;
+    }
+}
