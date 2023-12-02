@@ -1,8 +1,12 @@
 from glob import glob
 from os.path import basename
-STATIC_FILES_PATH = r'.\\static_files\\'
+from os import name as os_name
 
-
+if os_name == 'nt':
+    STATIC_FILES_PATH = r'.\\static_files\\'
+else:
+    STATIC_FILES_PATH = r'./static_files/'
+    
 STATIC_FILES = {}
 
 # load all to memeory to speed up

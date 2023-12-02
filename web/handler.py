@@ -1,7 +1,9 @@
 from tornado.web import RequestHandler
 from web.static_file import *
 from tornado_http_auth import auth_required, DigestAuthMixin
-from web.auth import ACCOUNTS
+from web.auth import ACCOUNTS, new_account, fetch_account, update_account
+from GUI.diagram import draw
+from re import search
 
 
 class root(RequestHandler):
@@ -18,11 +20,13 @@ class APIs(RequestHandler, DigestAuthMixin):
             'post': {
                 '/API?account_register': self.account_registion,
                 '/API?account_home': self.account_home,
-                '/API?account_logout': self.account_logout
+                '/API?account_logout': self.account_logout,
+                '/API?account_log_update': self.account_log_update
             },
             # try to void use get, get does not hide params
             'get': {
-                '/API?account_logging': self.account_logging
+                '/API?account_logging': self.account_logging,
+                '/API?statistic_analysis': self.account_statistic
             }
         }
 
@@ -43,6 +47,17 @@ class APIs(RequestHandler, DigestAuthMixin):
     def account_logging(self, *args):
         self.write(STATIC_FILES['data_logging.html'])
 
+    def account_log_update(self, *args):
+
+        self.write('')
+
+    @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
+    def account_statistic(self):
+        user = search('username=\".*\", realm', self.request.headers.get('Authorization')
+                      ).group(0).replace('username="', '').replace('", realm', '')
+        user_data = fetch_account(user)
+        self.write(draw('test', 'lb', user_data['msg']['duration']))
+
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_logout(self, *args):
         pass
@@ -60,7 +75,8 @@ class STATIC(RequestHandler):
 
     def get(self, *args):
         try:
-            self.write(STATIC_FILES[self.request.arguments['file'][0].decode()])
+            self.write(
+                STATIC_FILES[self.request.arguments['file'][0].decode()])
             return
         except Exception as e:
             print(e)

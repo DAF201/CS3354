@@ -27,6 +27,8 @@ def new_account(user_name, password, real_name):
                             b64encode(dumps([]).encode()))
         DATABASE.insert_bin('workout',  user_name,
                             b64encode(dumps([]).encode()))
+        DATABASE.insert_bin('duration',  user_name,
+                            b64encode(dumps([]).encode()))
         DATABASE.commit()
         return {'statu': 201, 'msg': 'success'}
     except Exception as e:
@@ -48,9 +50,11 @@ def fetch_account(user_name):
             'name', 'data', 'id=\'%s\'' % user_name)[0][0]
         ac['weight'] = loads(b64decode(DATABASE.select(
             'weight', 'data', 'id=\'%s\'' % user_name)[0][0]))
+        ac['duration'] = loads(b64decode(DATABASE.select(
+            'duration', 'data', 'id=\'%s\'' % user_name)[0][0]))
         ac['workout'] = loads(b64decode(DATABASE.select(
             'workout', 'data', 'id=\'%s\'' % user_name)[0][0]))
-        return {'statu': 200, 'msg': ac.__str__()}
+        return {'statu': 200, 'msg': ac}
 
     except Exception as e:
         return {'statu': 403, 'msg': e.__str__()}
