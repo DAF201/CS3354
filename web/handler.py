@@ -22,25 +22,29 @@ class APIs(RequestHandler, DigestAuthMixin):
             },
             # try to void use get, get does not hide params
             'get': {
-
+                '/API?account_logging': self.account_logging
             }
         }
 
-    def get(self):
+    def get(self, *args):
         self.API_handlers['get'][self.request.uri]()
 
-    def post(self):
+    def post(self, *args):
         self.API_handlers['post'][self.request.uri]()
 
-    def account_registion(self):
+    def account_registion(self, *args):
         pass
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
-    def account_home(self):
+    def account_home(self, *args):
         pass
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
-    def account_logout(self):
+    def account_logging(self, *args):
+        self.write(STATIC_FILES['data_logging.html'])
+
+    @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
+    def account_logout(self, *args):
         pass
 
 
@@ -48,17 +52,18 @@ class STATIC(RequestHandler):
     def __init__(self, application, request, **kwargs) -> None:
         super().__init__(application, request, **kwargs)
 
-    def post(self):
+    def post(self, *args):
         self.clear()
         self.set_status(403)
         self.finish("<html><body>METHOD FORBIDDEN</body></html>")
         return
 
-    def get(self):
+    def get(self, *args):
         try:
-            self.write(STATIC_FILES[self.request.arguments.keys()[0].decode()])
+            self.write(STATIC_FILES[self.request.arguments['file'][0].decode()])
             return
-        except:
+        except Exception as e:
+            print(e)
             self.clear()
             self.set_status(404)
             self.finish("<html><body>NO FOUND</body></html>")

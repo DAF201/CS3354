@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #0a0f0d;
+        /* Main background color */
+        color: #fff;
+        /* Main text color */
+    }
+
+    .logout-container,
+    .data-logging-container {
+        max-width: 400px;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    h1 {
+        color: #22d48a;
+        /* Green color for headers */
+    }
+
+    .btn-primary {
+        background-color: #22d48a;
+        /* Green button background */
+        color: #0a0f0d;
+        /* Button text color */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #22d48a;
+        /* Green border for input */
+        background-color: #1b1f1d;
+        /* Dark background for input */
+        color: #fff;
+        /* Input text color */
+    }
+
+    input::placeholder {
+        color: #9e9e9e;
+    }
+</style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Fusion - Data Logging</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="/static?file=data_logging.css"> -->
 </head>
+
 <body>
     <div class="data-logging-container">
         <h1>Data Logging</h1>
@@ -16,7 +69,38 @@
             <button type="submit" class="btn-primary">Log Data</button>
         </form>
     </div>
-
-    <script src="app.js"></script>
 </body>
+<script>function request(method, URL, param, callback = function () { }, callback_args = []) {
+        let http_request = new XMLHttpRequest();
+        try {
+            http_request.open(method, URL, true);
+            http_request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            http_request.send(param);
+            http_request.onloadend = function () {
+                let data_backup = http_request.responseText;
+                callback(http_request.responseText, callback_args);
+            };
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    // Add event listener for the form submission
+    document.getElementById('dataForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        let workoutType = this.workoutType.value;
+        let duration = this.duration.value;
+        let caloriesBurned = this.caloriesBurned.value;
+
+        // Construct the parameters as a URL-encoded string
+        let params = `workoutType=${encodeURIComponent(workoutType)}&duration=${encodeURIComponent(duration)}&caloriesBurned=${encodeURIComponent(caloriesBurned)}`;
+
+        request('POST', 'https://your-backend-url.com/data-log', params, function (response) {
+            console.log('Data logged:', response);
+            // Handle the response here
+        });
+    });
+</script>
+<!-- <script src="/static?file=data_logging.js"></script> -->
+
 </html>
