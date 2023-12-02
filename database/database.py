@@ -55,7 +55,7 @@ class database:
             else:
                 op += "\'%s\'\'" % values
             op = op[:-1]+');'
-            print(op)
+            # print(op)
             self.cursor.execute(op)
             return True
 
@@ -81,7 +81,7 @@ class database:
             if any([x is None for x in [table, col, where]]):
                 return False
             op = "SELECT %s FROM %s WHERE %s" % (col, table, where)
-            print(op)
+            # print(op)
             self.cursor.execute(op)
             return self.cursor.fetchall()
         except Exception as e:
@@ -100,7 +100,7 @@ class database:
         try:
             op = 'UPDATE %s SET data=\'%s\' WHERE id=\'%s\';' % (
                 table, value, primary_key)
-            print(op)
+            # print(op)
             self.cursor.execute(op)
             return True
         except Exception as e:
@@ -110,7 +110,7 @@ class database:
     def update_bin(self, table, primary_key, value):
         try:
             op = 'UPDATE ' + table+' SET data=%s '+' WHERE id=\''+primary_key+'\';'
-            print(op)
+            # print(op)
             self.cursor.execute(op, (value,))
             return True
         except Exception as e:

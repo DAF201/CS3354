@@ -1,12 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    /* Basic Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body,
+    html {
+        height: 100%;
+        font-family: 'Arial', sans-serif;
+        background-color: #0a0f0d;
+        /* Main background color */
+        color: #fff;
+        /* Main text color */
+    }
+
+    .logout-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2em;
+        color: #22d48a;
+        /* Fitness Fusion theme green color */
+        margin-bottom: 1em;
+    }
+
+    .logout-content h2 {
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .logout-content p {
+        font-size: 1em;
+        margin-bottom: 2em;
+    }
+
+    .btn-primary {
+        background-color: #22d48a;
+        /* Button background color */
+        color: #0a0f0d;
+        /* Button text color */
+        border: none;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #1e9d74;
+        /* Darken the button on hover */
+    }
+
+    /* You may want to add media queries to optimize the layout for different screen sizes */
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 1.5em;
+        }
+
+        .logout-content h2 {
+            font-size: 1.2em;
+        }
+
+        .logout-content p {
+            font-size: 0.9em;
+        }
+    }
+</style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Logout - Fitness Fusion</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
 </head>
+
 <body>
     <div class="logout-container">
         <header>
@@ -16,9 +94,40 @@
             <h2>Logout Successful</h2>
             <p>You have been successfully logged out. We hope to see you again soon!</p>
             <!-- Added an ID for the JavaScript to hook into and removed the href attribute -->
-            <button id="returnHome" class="btn-primary">Log In Again</button>
+            <button onclick="location.href = '/';" class="btn-primary">RETURN TO HOME</button>
         </main>
     </div>
 </body>
-</html>
 
+<script>// app.js
+    // function request(method, URL, param, callback = function () { }, callback_args = []) {
+    //     let http_request = new XMLHttpRequest();
+    //     try {
+    //         http_request.open(method, URL);
+    //         http_request.send(param);
+    //         http_request.onloadend = function () {
+    //             let data_backup = http_request.responseText;
+    //             callback(http_request.responseText, callback_args);
+    //         };
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
+
+    // // Function to handle the 'Log In Again' button click
+    // function handleLoginAgain() {
+    //     // Here you might want to direct to a logout handler on the backend
+    //     // For simplicity, we're just redirecting to a login page
+    //     window.location.href = 'login.html';
+    // }
+
+    // // When the DOM content is loaded, attach the event to the 'Log In Again' button
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var loginAgainButton = document.getElementById('returnHome');
+    //     if (loginAgainButton) {
+    //         loginAgainButton.addEventListener('click', handleLoginAgain);
+    //     }
+    // });
+</script>
+
+</html>

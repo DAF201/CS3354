@@ -60,7 +60,9 @@ class APIs(RequestHandler, DigestAuthMixin):
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_logout(self, *args):
-        pass
+        self.clear()
+        self.set_status(401)
+        self.finish(STATIC_FILES['logout_page.html'])
 
 
 class STATIC(RequestHandler):

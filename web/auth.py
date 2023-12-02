@@ -26,9 +26,9 @@ def new_account(user_name, password, real_name):
         DATABASE.insert_bin('weight',  user_name,
                             b64encode(dumps([]).encode()))
         DATABASE.insert_bin('workout',  user_name,
-                            b64encode(dumps([]).encode()))
+                            b64encode(dumps(['start']).encode()))
         DATABASE.insert_bin('duration',  user_name,
-                            b64encode(dumps([]).encode()))
+                            b64encode(dumps([0.0]).encode()))
         DATABASE.commit()
         return {'statu': 201, 'msg': 'success'}
     except Exception as e:
