@@ -29,6 +29,7 @@ class APIs(RequestHandler, DigestAuthMixin):
             # try to void use get, get does not hide params
             'get': {
                 '/API?account_logging': self.account_logging,
+                '/API?logout': self.account_logout,
                 '/API?statistic_analysis': self.account_statistic,
                 '/API?account_register': self.account_register_get,
             }
@@ -75,14 +76,9 @@ class APIs(RequestHandler, DigestAuthMixin):
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_statistic(self):
-        options = ['height', 'weight', 'calorie', 'BMI', 'duration']
-        key = []
-        for x in self.request.body_arguments.keys():
-            key.append(x)
-        data = loads(key[0])
         user = search('username=\".*\", realm', self.request.headers.get('Authorization')
                       ).group(0).replace('username="', '').replace('", realm', '')
-        self.write(b64encode(draw(user, options[int(data) % 5])))
+        self.write(b64encode(draw(user, 'duration')))
 
     @auth_required(realm='Protected', auth_func=ACCOUNTS.get)
     def account_statistic_b64(self):

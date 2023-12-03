@@ -85,7 +85,7 @@
     <title>Account Logout - Fitness Fusion</title>
 </head>
 
-<body>
+<body onload="redirect()">
     <div class="logout-container">
         <header>
             <h1>Fitness Fusion</h1>
@@ -93,13 +93,22 @@
         <main class="logout-content">
             <h2>Logout Successful</h2>
             <p>You have been successfully logged out. We hope to see you again soon!</p>
+            <p>Redirecting you back to home page</p>
             <!-- Added an ID for the JavaScript to hook into and removed the href attribute -->
-            <button onclick="location.href = '/';" class="btn-primary">RETURN TO HOME</button>
+            <!-- <button onclick="location.href = '/';" class="btn-primary">RETURN TO HOME</button> -->
         </main>
     </div>
 </body>
 
-<script>// app.js
+<script>
+    async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function redirect() {
+        await sleep(3000)
+        window.location = '/'
+    }
+    // app.js
     // function request(method, URL, param, callback = function () { }, callback_args = []) {
     //     let http_request = new XMLHttpRequest();
     //     try {

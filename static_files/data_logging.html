@@ -81,6 +81,7 @@
 
 <body>
     <p id='counter' style="display: none;">0</p>
+    <button class="btn-primary" onclick="logout()">logout</button>
     <div class="data-logging-container">
         <h1>Data Logging</h1>
         <iframe name="hiddenfream" id="hiddenfream" style="display: none;"></iframe>
@@ -113,6 +114,10 @@
     </div>
 </body>
 <script>
+    function logout() {
+        window.location = '/API?logout'
+    }
+
     function request(method, URL, param, callback = function () { }, callback_args = []) {
         let http_request = new XMLHttpRequest();
         try {
