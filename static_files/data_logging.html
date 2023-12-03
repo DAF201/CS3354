@@ -103,14 +103,16 @@
         <input type="number" placeholder="weight(kg)" id="BMI_W" style="width: 20%;" onchange="BMI_CAL()">
         <input type="number" placeholder="height(cm)" id="BMI_H" style="width: 20%;" onchange="BMI_CAL()">
         <h3 style="text-align: center;color: #22d48a;">YOUR BMI IS:<h3 style="text-align: center;color: #22d48a;"
-                id="BMI_V"></h3>
+                id="BMI_V">0</h3>
         </h3>
     </div>
-    <h2 id='diagram_title' style="text-align: center;color: #22d48a;">Work-Out</h2>
+    <h2 style="text-align: center;color: #22d48a;">now displaying:<h2 id='diagram_title'
+            style="text-align: center;color: #22d48a;">None</h2>
+    </h2>
     <div style="text-align: center;">
         <button id="next_diagram" onclick="get_next_diagram()" class="btn-primary" style="text-align: center;">next
             diagram</button>
-        <img id='static img' src="/API?statistic_analysis" class="center">
+        <img id='static img' src="/API?statistic_analysis" class="center" style="display: none;">
     </div>
 </body>
 <script>
@@ -133,6 +135,7 @@
         }
     }
     function get_next_diagram() {
+        document.getElementById('static img').style.display = 'block'
         var title = ['height', 'weight', 'calorie', 'BMI', 'workout']
         document.getElementById('diagram_title').innerHTML = title[Number(document.getElementById('counter').innerHTML) % 5]
         request('post', '/API?statistic_analysis_b64', (document.getElementById('counter').innerHTML), update_diagram)
